@@ -13,9 +13,9 @@ st.caption("Twój osobisty doradca lotów orbitalnych (RAG + kursy NBP na żywo)
 
 # Lista modeli w kolejności priorytetu (Fallback w razie przeciążenia 503)
 DOSTEPNE_MODELE = [
-    "gemini-2.5-flash-lite",
-    "gemini-2.5-flash",
-    "gemini-2.0-flash"
+    "gemini-3.5-flash-lite",
+    "gemini-3.5-flash",
+    "gemini-2.5-flash"
 ]
 
 # 2. Pobieranie klucza API z sejfu Streamlit Secrets
@@ -107,6 +107,9 @@ def zapytaj_agenta_z_fallbackiem(historia):
             ostatni_blad = e
             # Jeśli serwer jest przeciążony (503) lub limit chwilowo przekroczony (429), próbujemy kolejny model
             if "503" in str(e) or "UNAVAILABLE" in str(e) or "429" in str(e):
+                time.sleep(0.5)
+                continue
+            if any(kod in str(e) for kod in ["503", "UNAVAILABLE", "429", "404"]):
                 time.sleep(0.5)
                 continue
             else:
