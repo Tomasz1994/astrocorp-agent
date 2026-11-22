@@ -57,7 +57,7 @@ def pobierz_kurs_nbp(kod_waluty: str) -> float:
 # 5. Pamięć sesji użytkownika w przeglądarce (st.session_state)
 if "sesja_czatu" not in st.session_state:
     st.session_state.sesja_czatu = client.chats.create(
-        model="gemini-flash-lite-latest",
+        model="gemini-2.5-flash",
         config=types.GenerateContentConfig(
             system_instruction=(
                 "Jesteś przyjaznym i precyzyjnym wirtualnym asystentem linii kosmicznych AstroCorp. "
